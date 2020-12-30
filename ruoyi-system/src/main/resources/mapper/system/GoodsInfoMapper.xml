@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ruoyi.system.mapper.GoodsInfoMapper">
+    <sql id="selectGoodsVo">
+        select spbh,spsx,spmc,spjg,spdw,spjj,sphyd,sphyd,spjhdh,bz from goods_info
+    </sql>
+
+    <select id="selectlistGoodsInfo" resultType="GoodsInfo">
+        select spbh,spsx,spmc,spjg,spdw,spjj,sphyd,sphyd,spjhdh,bz from goods_info
+        where 1=1
+        <if test="spbh != null and spbh !=''">
+            AND spbh like concat('%',#{spbh},'%')
+        </if>
+        <if test="spjg != null and spjg !=''">
+            AND spjg like concat('%',#{spjg},'%')
+        </if>
+        <if test="spmc != null and spmc !=''">
+            AND spmc like concat('%',#{spmc},'%')
+        </if>
+        <if test="spsx != null and spsx !=''">
+            AND spsx like concat('%',#{spsx},'%')
+        </if>
+        <if test="spdw != null and spdw !=''">
+            AND spdw like concat('%',#{spdw},'%')
+        </if>
+        <if test="spjj != null and spjj !=''">
+            AND spjj like concat('%',#{spjj},'%')
+        </if>
+        <if test="sphyd != null and sphyd !=''">
+            AND sphyd like concat('%',#{sphyd},'%')
+        </if>
+        <if test="spjhdh != null and spjhdh !=''">
+            AND spjhdh like concat('%',#{spjhdh},'%')
+        </if>
+        <if test="bz != null and bz !=''">
+            AND bz like concat('%',#{bz},'%')
+        </if>
+    </select>
+
+    <select id="checkGoodsExist" resultType="GoodsInfo">
+        <include refid="selectGoodsVo"/>
+        where spbh=#{spbh}
+    </select>
+
+    <insert id="insertGoods" parameterType="GoodsInfo">
+        insert into goods_info(spbh,spsx,spmc,spjg,spdw,spjj,sphyd,spjhdh,bz)
+        values(#{spbh},#{spsx},#{spmc},#{spjg},#{spdw},#{spjj},#{sphyd},#{spjhdh},#{bz})
+    </insert>
+    
+    <delete id="deleteGoodsBySpbh" parameterType="Long">
+        delete from goods_info where spbh=#{spbh}
+    </delete>
+
+    <update id="updateGoods" parameterType="GoodsInfo">
+        update goods_info set spsx=#{spsx},spmc=#{spmc},spjg=#{spjg},spdw=#{spdw},spjj=#{spjj},sphyd=#{sphyd},spjhdh=#{spjhdh},bz=#{bz}
+        where spbh=#{spbh}
+    </update>
+</mapper>
