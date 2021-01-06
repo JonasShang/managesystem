@@ -111,6 +111,12 @@ export const constantRoutes = [
         name: 'print',
         meta: { title: '销售清单'}
       },
+      {
+        path: 'goodsContract',
+        component: (resolve) => require(['@/views/goods/goodsContract/index'], resolve),
+        name: 'contract',
+        meta: { title: '购销合同'}
+      },
     ]
   },
   {
@@ -127,7 +133,31 @@ export const constantRoutes = [
       },
     ]
   },
-
+  {
+    path: '/company',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'companyInfo',
+        component: (resolve) => require(['@/views/company/companyInfo/index'], resolve),
+        name: 'companyInfo',
+        meta: { title: '公司简介'}
+      },
+      {
+        path: 'companyMap',
+        component: (resolve) => require(['@/views/company/companyMap/index'], resolve),
+        name: 'companyMap',
+        meta: { title: '地图坐标'}
+      },
+      {
+        path: 'companyPeople',
+        component: (resolve) => require(['@/views/company/companyPeople/index'], resolve),
+        name: 'companyPeople',
+        meta: { title: '员工信息'}
+      },
+    ]
+  },
   {
     path: '/job',
     component: Layout,

@@ -31,7 +31,7 @@
           <!--icon图标链接-->
           <!--https://element.eleme.cn/#/zh-CN/component/icon#tu-biao-ji-he-->
           <el-button type="primary" size="mini" icon="el-icon-search" @click="handlePrint" :loading="loading1">打印</el-button>
-          <el-button type="danger" icon="el-icon-refresh" size="mini" @click="resetPrint('rules')">清空</el-button>
+          <el-button type="danger" icon="el-icon-refresh" size="mini" @click="resetPrint('rules')">重置</el-button>
           <el-button type="warning" icon="el-icon-upload2" size="mini" @click="exportPrint" :loading="downloading">导出文件</el-button>
           <el-button type="default" icon="el-icon-circle-plus-outline" size="mini" @click="sumPrint" :loading="loading2">计算总价</el-button>
           <!--<el-form-item label="总金额" prop="zje">-->
@@ -306,13 +306,22 @@
         this.$Modal.confirm({
           loading:true,
           title:'提示',
-          content:'是否清空"' + this.queryParams.ghdw + '"的所有数据（编号、日期除外）',
-          okText:'清空',cancelText:'取消',
+          content:'是否重置"' + this.queryParams.ghdw + '"的所有数据',
+          okText:'重置',cancelText:'取消',
           onOk:()=>{
             this.zje = [];
             this.zjeNum = 0;
             this.queryParams.ghdw = '';
             this.queryParams.lxdh = '';
+            //获取当前时分秒
+            let hh = new Date().getHours();
+            let mf = new Date().getMinutes()<10 ? '0'+new Date().getMinutes() : new Date().getMinutes();
+            let ss = new Date().getSeconds()<10 ? '0'+new Date().getSeconds() : new Date().getSeconds();
+            this.queryParams.djbh = 'CY'+hh+mf+ss;
+            var aData = new Date();
+            console.log(aData) //Wed Aug 21 2019 10:00:58 GMT+0800 (中国标准时间)
+            this.queryParams.djrq =aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
+            console.log(this.queryParams.djrq) //2019-8-20
             // this.queryParams.djbh = '';
             // this.queryParams.djrq = '';
             this.tableData = [
