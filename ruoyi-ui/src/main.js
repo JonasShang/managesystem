@@ -3,6 +3,9 @@ import Vue from 'vue'
 //下面两个用于点击图片放大（npm install v-viewer --save）
 import Viewer from 'v-viewer'
 import 'viewerjs/dist/viewer.css'
+//地图
+import VueAMap from 'vue-amap';
+// import { lazyAMapApiLoaderInstance } from 'vue-amap';
 
 import Cookies from 'js-cookie'
 
@@ -93,3 +96,20 @@ Vue.use(Viewer)
 Viewer.setDefaults({
   Options: { 'inline': true, 'button': true, 'navbar': true, 'title': true, 'toolbar': true, 'tooltip': true, 'movable': true, 'zoomable': true, 'rotatable': true, 'scalable': true, 'transition': true, 'fullscreen': true, 'keyboard': true, 'url': 'data-source' }
 })
+
+//地图
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+  key: '2798ee736c923585a4ab02ee17a756da',
+  // plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // v: '1.4.4',
+  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PlaceSearch', 'AMap.Geolocation', 'AMap.Geocoder'],
+  v: '1.4.4',
+  uiVersion: '1.0'
+});
+// lazyAMapApiLoaderInstance.load().then(() => {
+//   // your code ...
+//   this.map = new AMap.Map('amapContainer', {
+//     center: new AMap.LngLat(121.59996, 31.197646)
+//   });
+// });

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ruoyi.system.mapper.PeopleInfoMapper">
+    <sql id="selectPeopleVo">
+        select ygbh,ygxm,ygxb,ygsr,yghj,gznr from people_info
+    </sql>
+    <select id="selectlistPeopleInfo" resultType="PeopleInfo">
+      select ygbh,ygxm,ygxb,ygsr,yghj,gznr from people_info
+      where 1=1
+      <if test="ygbh != null and ygbh != ''">
+          AND ygbh like concat('%',#{ygbh},'%')
+      </if>
+        <if test="ygxm != null and ygxm != ''">
+            AND ygxm like concat('%',#{ygxm},'%')
+        </if>
+        <if test="ygsr != null and ygsr != ''">
+            AND ygsr like concat('%',#{ygsr},'%')
+        </if>
+        <if test="yghj != null and yghj != ''">
+            AND yghj like concat('%',#{yghj},'%')
+        </if>
+        <if test="gznr != null and gznr != ''">
+            AND gznr like concat('%',#{gznr},'%')
+        </if>
+    </select>
+    <select id="checkPeopleExit" resultType="PeopleInfo">
+        <include refid="selectPeopleVo"/>
+        where ygbh=#{ygbh}
+    </select>
+
+    <insert id="insertPeople" parameterType="GoodsInfo">
+        insert into people_info(ygbh,ygxm,ygxb,ygsr,yghj,gznr)
+        values(#{ygbh},#{ygxm},#{ygxb},#{ygsr},#{yghj},#{gznr})
+    </insert>
+
+    <delete id="deletePeopleByygbh" parameterType="Long">
+        delete from people_info where ygbh=#{ygbh}
+    </delete>
+
+    <update id="updatePeople" parameterType="PeopleInfo">
+        update people_info set ygbh=#{ygbh},ygxm=#{ygxm},ygxb=#{ygxb},ygsr=#{ygsr},yghj=#{yghj},gznr=#{gznr}
+        where ygbh=#{ygbh}
+    </update>
+</mapper>

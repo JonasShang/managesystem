@@ -17,15 +17,19 @@ public class RuoYiApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(RuoYiApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  若依启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
-                " .-------.       ____     __        \n" +
-                " |  _ _   \\      \\   \\   /  /    \n" +
-                " | ( ' )  |       \\  _. /  '       \n" +
-                " |(_ o _) /        _( )_ .'         \n" +
-                " | (_,_).' __  ___(_ o _)'          \n" +
-                " |  |\\ \\  |  ||   |(_,_)'         \n" +
-                " |  | \\ `'   /|   `-'  /           \n" +
-                " |  |  \\    /  \\      /           \n" +
-                " ''-'   `'-'    `-..-'              ");
+        System.out.println("(♥◠‿◠)ﾉﾞ  SZX启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
+            "************************************************** \n" +
+            "   SSSSSS            ZZZZZZZZZZZZ     XX       XX \n"+
+            " SS      SS                   ZZ       XX     XX\n"+
+            " SS                         ZZ          XX   XX\n"+
+            "  SS                      ZZ             XXXXX\n"+
+            "    SSSS                ZZ                XXX\n"+
+            "        SS             ZZ                XXXXX\n"+
+            "         SS           ZZ                XX   XX\n"+
+            " SS      SS          ZZ                XX     XX\n"+
+            "   SSSSSS           ZZZZZZZZZZZZ     XX        XX\n+" +
+            "************************************************** \n");
+        //自动生成有趣文字
+        //http://patorjk.com/software/taag/#p=display&h=0&v=3&f=X992&t=SZX
     }
 }

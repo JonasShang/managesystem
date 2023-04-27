@@ -100,13 +100,13 @@
                 <span>{{ scope.row[item.prop] }}</span>
               </template>
               <el-table-column v-for="(itemchild, indexchild) in item.children" :key="indexchild" :prop="itemchild.prop" :label="itemchild.label" :width="itemchild.width">
-                <template slot-scope="scope">
-                  <el-input
-                    v-if="itemchild.edit" size="small" ref="tableInput" v-model="scope.row[itemchild.prop]" @blur="removeClass" @change="handleEdit(itemchild.prop, scope.$index, scope.row)"></el-input>
-                  <span>{{ scope.row[itemchild.prop] }}</span>
-                </template>
-              </el-table-column>
-            </el-table-column>
+          <template slot-scope="scope">
+            <el-input
+              v-if="itemchild.edit" size="small" ref="tableInput" v-model="scope.row[itemchild.prop]" @blur="removeClass" @change="handleEdit(itemchild.prop, scope.$index, scope.row)"></el-input>
+            <span>{{ scope.row[itemchild.prop] }}</span>
+          </template>
+        </el-table-column>
+          </el-table-column>
           </el-table>
           <Footer><p>铝材购销合同使用方法：<br>
             ✔   1.右方铝材购销合同样板可点击放大进行对照<br>
@@ -137,7 +137,7 @@
     name: "contract",
     data () {
       const Column = [
-        { label: '编号', prop: 'bh', width: '50', key: 'bh', edit: true ,align: 'center'},
+        { label: '编号', prop: 'bh', width: '50', key: 'bh', edit: false ,align: 'center'},
         { label: '品名', prop: 'pm', minwidth: '80', key: 'pm', edit: true ,align: 'center'},
         { label: '规格', prop: 'gg', minwidth: '60', key: 'gg', edit: true ,align: 'center'},
         { label: '单位', prop: 'dw', minwidth: '60', key: 'dw', edit: true ,align: 'center'},
@@ -162,6 +162,8 @@
         tableData: tableData,
         tableColumn: Column,
         tableHeight: 175,
+        loading1: false,
+        loading2: false,
         // 显示搜索条件
         showSearch: true,
         queryParams:{
@@ -254,7 +256,7 @@
         this.queryParams.zjeNum = this.numFilter0(this.zjeNum)+'.00';
         this.queryParams.zjeChinese = this.smallToBig(this.numFilter0(this.zjeNum) );
 
-        goodsHandlePrint(this.tableData,this.queryParams).then(response => {
+        goodsContractPrint(this.tableData,this.queryParams).then(response => {
           this.$router.push({
             name: 'responsepdf',
             params: {
@@ -266,33 +268,37 @@
         this.loading1=false;
       },
       resetPrint(name){
-        // this.$Modal.confirm({
-        //   loading:true,
-        //   title:'提示',
-        //   content:'是否清空"' + this.queryParams.ghdw + '"的所有数据（编号、日期除外）',
-        //   okText:'清空',cancelText:'取消',
-        //   onOk:()=>{
-        //     this.zje = [];
-        //     this.zjeNum = 0;
-        //     this.queryParams.ghdw = '';
-        //     this.queryParams.lxdh = '';
-        //     // this.queryParams.djbh = '';
-        //     // this.queryParams.djrq = '';
-        //     this.tableData = [
-        //       { bh:1 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:2 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:3 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:4 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:5 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:6 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:7 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:8 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:9 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: ""},
-        //       { bh:10 , cpmcjgg: "", dw: "", sl: "", dj: "", je: "", bz: "" }
-        //     ];
-        //     this.$Modal.remove();
-        //   }
-        // })
+        this.$Modal.confirm({
+          loading:true,
+          title:'提示',
+          content:'是否重置的所有数据',
+          okText:'重置',cancelText:'取消',
+          onOk:()=>{
+            this.queryParams.jf = '';
+            this.queryParams.yf = '上海昌弈金属制品有限公司';
+            this.queryParams.jffddbr = '';
+            this.queryParams.yffddbr = '';
+            this.queryParams.jfwtdlr = '';
+            this.queryParams.yfwtdlr = '';
+            this.queryParams.jfdh = '';
+            this.queryParams.yfdh = '13764746926';
+            this.queryParams.jfdz = '';
+            this.queryParams.yfdz = '上海浦东新区南六公路699弄（两港装饰城）4支弄3幢185-191号';
+            //获取当前年月日
+            var aData = new Date();
+            this.queryParams.jfrq =aData.getFullYear() + "-" + (aData.getMonth() + 1) + "-" + aData.getDate();
+            this.queryParams.yfrq =this.queryParams.jfrq;
+            this.tableData = [
+              { bh:1, pm:'' , gg: '', dw: '', sl: '', dj: '', je: ''},
+              { bh:2, pm:'' , gg: '', dw: '', sl: '', dj: '', je: ''},
+              { bh:3, pm:'' , gg: '', dw: '', sl: '', dj: '', je: ''},
+              { bh:4, pm:'' , gg: '', dw: '', sl: '', dj: '', je: ''},
+              { bh:5, pm:'' , gg: '', dw: '', sl: '', dj: '', je: ''},
+              { bh:6, pm:'' , gg: '', dw: '', sl: '', dj: '', je: ''},
+          ];
+            this.$Modal.remove();
+          }
+        })
       },
       smallToBig(money) {
         //  将数字金额转换为大写金额

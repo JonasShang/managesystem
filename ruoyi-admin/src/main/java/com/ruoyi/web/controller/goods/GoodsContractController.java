@@ -1,17 +1,18 @@
 package com.ruoyi.web.controller.goods;
 
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.entity.GoodsContractPrintData;
+import com.ruoyi.common.core.domain.entity.GoodsContractTranferDTO;
 import com.ruoyi.web.controller.util.GeneratePdfFileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -38,13 +39,14 @@ public class GoodsContractController {
     private  String eleFilePath;
 
     @PutMapping("/list")
-    public AjaxResult print(){
-//        String filename = "购销合同"+DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now())+".pdf";
-        String filename = "铝合金断桥铝型材门窗制作及安装合同.pdf";
+    public AjaxResult print(@Validated @RequestBody GoodsContractTranferDTO goodsContractTranferDTO){
+        System.out.println(goodsContractTranferDTO.getGoodsContractPrintData());
+        System.out.println(goodsContractTranferDTO.getGoodsContractTableData());
+        GoodsContractPrintData goodsContractPrintData = goodsContractTranferDTO.getGoodsContractPrintData();
+        String filename = "铝材购销合同"+goodsContractPrintData.getJf()+DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now()) + (new SecureRandom().nextInt(9000)+1000) + ".pdf";
         String filePath = downloadpath + "upload/header/" + filename;
-//        boolean generateFlag = GeneratePdfFileUtil.generatePDFFile( goodsTranferDTO, filePath);
+        boolean gxhtgenerateFlag = GeneratePdfFileUtil.gxhtgeneratePDFFile( goodsContractTranferDTO, filePath);
         String finalFileStorePath = getFileStorePath(filename);
-
         return AjaxResult.success(finalFileStorePath,null);
     }
 

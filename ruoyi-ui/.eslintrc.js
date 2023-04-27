@@ -10,6 +10,10 @@ module.exports = {
     node: true,
     es6: true,
   },
+  globals: {
+    'AMap': false,
+    'AMapUI': false
+  },
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
 
   // add your custom rules here
