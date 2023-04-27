@@ -156,6 +156,12 @@ export const constantRoutes = [
         name: 'companyPeople',
         meta: { title: '员工信息'}
       },
+      {
+        path: 'companyCamera',
+        component: (resolve) => require(['@/views/company/companyCamera/index'], resolve),
+        name: 'companyCamera',
+        meta: { title: '公司监控'}
+      },
     ]
   },
   {
